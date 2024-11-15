@@ -1,0 +1,49 @@
+<form [formGroup]="userForm" (ngSubmit)="onSubmit()" class="user-form">
+    <mat-form-field subscriptSizing="dynamic">
+        <mat-label>First Name</mat-label>
+        <input matInput formControlName="firstName" />
+        <mat-error>{{ errorMessages['firstName']() }}</mat-error>
+    </mat-form-field>
+    <mat-form-field subscriptSizing="dynamic">
+        <mat-label>Last Name</mat-label>
+        <input matInput formControlName="lastName" />
+        <mat-error>{{ errorMessages['lastName']() }}</mat-error>
+    </mat-form-field>
+    <mat-form-field subscriptSizing="dynamic">
+        <mat-label>Email</mat-label>
+        <input matInput formControlName="email" />
+        <mat-error>{{ errorMessages['email']() }}</mat-error>
+    </mat-form-field>
+    <div formArrayName="interests" class="interests-container">
+        @for (interest of interests.controls; track interest; let i = $index) {
+            <div class="interest">
+                <mat-form-field subscriptSizing="dynamic">
+                    <mat-label>Interest {{i + 1}}</mat-label>
+                    <input matInput [formControlName]="i" placeholder="Enter interest">
+                    <mat-error>{{ errorMessages['interest']() }}</mat-error>
+                </mat-form-field>
+                <button mat-mini-fab (click)="removeInterest(i)" type="button" color="warn">
+                    <mat-icon>close</mat-icon>
+                </button>
+            </div>
+        }
+        @if (this.interests.hasError('minArrayLength')) {
+            <mat-error>{{ errorMessages['interestArray']() }}</mat-error>
+        }
+        <button mat-flat-button (click)="addInterest('')" type="button" class="add-button">Add Interest</button>
+    </div>
+    
+    <div class="actions">
+        <button mat-flat-button type="submit" [disabled]="!userForm.valid">Save</button>
+        @if (isNgRx) {
+            @if (userDetailsSaved$) {
+                <button mat-flat-button (click)="revertChanges()" color="warn" type="button">Undo Changes</button> 
+                <button mat-flat-button (click)="clearCache()" color="warn" type="button">Clear Cache</button>
+            }
+        } @else {
+            @if (userDetailsSaved) {
+                <button mat-flat-button (click)="clearCache()" color="warn" type="button">Clear Cache</button>
+            }
+        }
+    </div>
+</form>

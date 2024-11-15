@@ -1,0 +1,34 @@
+$space: 20px;
+$minWidth: 150px;
+.user-form {
+    display: flex;
+    flex-direction: column;
+    gap: $space;
+    margin-bottom: $space;
+    .mat-mdc-form-field {
+        min-width: $minWidth;
+    }
+    .interests-container {
+        display: flex;
+        flex-direction: column;
+        gap: $space;
+
+        .interest {
+            display: flex;
+            align-items: center;
+            gap: $space;
+            .mat-mdc-form-field {
+                width: 30%;
+                min-width: $minWidth;
+            }
+        }
+        .add-button {
+            width: 30%;
+        }
+    }
+    .actions {
+        display: flex;
+        justify-content: space-between;
+        padding-top: $space;
+    }
+}
